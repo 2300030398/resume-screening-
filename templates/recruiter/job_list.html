@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Jobs{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3">Job Openings</h1>
+    <a class="btn btn-primary" href="{% url 'recruiter:job_create' %}">Create Job</a>
+</div>
+<div class="row g-3">
+    {% for job in jobs %}
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h2 class="h5"><a href="{{ job.get_absolute_url }}">{{ job.title }}</a></h2>
+                    <p class="text-muted">{{ job.required_skills }}</p>
+                    <p class="mb-0">{{ job.candidates.count }} candidates | {{ job.minimum_experience }}+ years</p>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p class="text-muted">Create your first job opening to begin screening resumes.</p>
+    {% endfor %}
+</div>
+{% endblock %}

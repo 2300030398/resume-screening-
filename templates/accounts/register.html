@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<div class="aurora-bg"></div>
+<div class="auth-shell">
+    <div class="auth-card" style="max-width: 460px;">
+        <span class="auth-eyebrow">AI Resume Screening</span>
+        <h1 class="auth-title">Create your account</h1>
+        <p class="auth-sub">Set up your recruiter profile to start screening candidates with AI.</p>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-primary w-100 mt-2">Create Account</button>
+        </form>
+        <p class="mt-4 mb-0 text-center small text-muted">
+            Already have an account? <a href="{% url 'accounts:login' %}">Sign in</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+<div class="table-responsive">
+    <table class="table align-middle">
+        <thead><tr><th>Name</th><th>Email</th><th>Job</th><th>Score</th><th>Status</th></tr></thead>
+        <tbody>
+        {% for candidate in candidates %}
+            <tr>
+                <td><a href="{{ candidate.get_absolute_url }}">{{ candidate.name|default:"Processing..." }}</a></td>
+                <td>{{ candidate.email|default:"-" }}</td>
+                <td>{{ candidate.job.title }}</td>
+                <td><span class="badge text-bg-primary score-pill">{{ candidate.score }}%</span></td>
+                <td>{{ candidate.get_status_display }}</td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="5" class="text-muted">No candidates found.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

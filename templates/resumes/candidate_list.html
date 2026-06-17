@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Candidates{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3">Candidates</h1>
+    <div class="d-flex gap-2">
+        <a class="btn btn-primary" href="{% url 'resumes:resume_upload' %}">Upload Resume</a>
+        <a class="btn btn-outline-secondary" href="{% url 'resumes:email_log_list' %}">Email Logs</a>
+        <div class="d-flex gap-2">
+    <a class="btn btn-primary" href="{% url 'resumes:resume_upload' %}">Upload Resume</a>
+    <a class="btn btn-outline-secondary" href="{% url 'resumes:export_excel' %}">Export Excel</a>
+    <a class="btn btn-outline-secondary" href="{% url 'resumes:export_csv' %}">Export CSV</a>
+</div>
+    </div>
+</div>
+<form class="row g-2 mb-3">
+    <div class="col-md-6">
+        <input class="form-control" name="q" value="{{ query }}" placeholder="Search name, email, or skill">
+    </div>
+    <div class="col-md-3">
+        <select class="form-select" name="status">
+            <option value="">All statuses</option>
+            {% for value,label in statuses %}
+                <option value="{{ value }}" {% if status == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-3">
+        <button class="btn btn-outline-primary w-100">Filter</button>
+    </div>
+</form>
+{% include "resumes/_candidate_table.html" with candidates=candidates %}
+{% endblock %}

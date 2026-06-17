@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}{{ job.title }}{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-start mb-3">
+    <div>
+        <h1 class="h3">{{ job.title }}</h1>
+        <p class="text-muted">{{ job.required_skills }} | {{ job.minimum_experience }}+ years</p>
+    </div>
+    <div class="btn-group">
+        <a class="btn btn-outline-secondary" href="{% url 'recruiter:job_update' job.pk %}">Edit</a>
+        <a class="btn btn-outline-danger" href="{% url 'recruiter:job_delete' job.pk %}">Delete</a>
+    </div>
+</div>
+<p>{{ job.description }}</p>
+<h2 class="h5 mt-4">Ranked Candidates</h2>
+{% include "resumes/_candidate_table.html" with candidates=candidates %}
+{% endblock %}

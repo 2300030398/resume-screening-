@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Resumes{% endblock %}
+
+{% block content %}
+<div class="container mt-4" style="max-width: 600px;">
+  <h2 class="mb-4">📄 Upload Resumes</h2>
+
+  <div class="alert alert-info">
+    <strong>Tip:</strong> You can upload multiple resumes at once for the same job.
+    Candidates scoring <strong>50% or above</strong> will be automatically shortlisted and notified by email.
+  </div>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="mb-3">
+      <label for="id_job" class="form-label fw-bold">Job Opening</label>
+      {{ form.job }}
+      {% if form.job.errors %}
+        <div class="text-danger">{{ form.job.errors }}</div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label for="id_resumes" class="form-label fw-bold">Resume Files</label>
+      <input
+        type="file"
+        name="resumes"
+        id="id_resumes"
+        class="form-control"
+        multiple
+        accept=".pdf,.doc,.docx"
+      >
+      <div class="form-text">Hold Ctrl (or Cmd on Mac) to select multiple files.</div>
+    </div>
+
+    <div id="file-list" class="mb-3 text-muted small"></div>
+
+    <button type="submit" class="btn btn-primary w-100">Upload & Process</button>
+  </form>
+</div>
+
+<script>
+  document.getElementById('id_resumes').addEventListener('change', function () {
+    const files = Array.from(this.files);
+    const list = document.getElementById('file-list');
+    if (files.length > 0) {
+      list.innerHTML = `<strong>${files.length} file(s) selected:</strong><ul class="mt-1">` +
+        files.map(f => `<li>${f.name}</li>`).join('') + '</ul>';
+    } else {
+      list.innerHTML = '';
+    }
+  });
+</script>
+{% endblock %}
